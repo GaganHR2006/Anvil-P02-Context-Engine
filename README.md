@@ -210,6 +210,9 @@ Returns one incident per family in top-5 for guaranteed recall:
 └── .gitignore
 ```
 
-## 📜 License
+## 👥 Team
 
-MIT
+**Team HPNG**  
+Built for Anvil Hackathon — Problem Statement P-02: Persistent Context Engine for AI SRE.
+
+
