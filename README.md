@@ -209,9 +209,7 @@ All operations are in-memory with O(log n) binary search for time-window queries
 - ✅ Deep mode ≤ 6s p95 (actual: < 1ms)
 
 ## 👥 Team
-
+Team HPNG
 Built for Anvil Hackathon — Problem Statement P-02: Persistent Context Engine for AI SRE.
 
-## 📜 License
 
-MIT
