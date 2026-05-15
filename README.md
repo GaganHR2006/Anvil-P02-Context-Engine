@@ -33,6 +33,40 @@ python run.py --adapter adapters.engine:Engine --seeds 99999 77777 55555 --n-ser
 python validate_worked_example.py
 ```
 
+## 🐳 Docker (Reproducibility)
+
+```bash
+# Build
+docker build -t anvil-p02 .
+
+# Run default benchmark (5-seed fast mode)
+docker run --rm anvil-p02
+
+# Run with custom args
+docker run --rm anvil-p02 --mode deep
+docker run --rm anvil-p02 --quick
+
+# Generate JSON report
+docker run --rm -v $(pwd):/output anvil-p02 python run.py --adapter adapters.engine:Engine
+```
+
+**Requirements:** Python 3.11+ (no external dependencies — pure stdlib)
+
+## 🏃 Benchmark Runner
+
+```bash
+# Linux/Mac
+./bench/run.sh
+
+# Windows
+bench\run.bat
+
+# With options
+./bench/run.sh --mode deep --seeds 42 101 202
+```
+
+The runner ingests the published sample, runs the canonical scenario, and emits `report.json` matching the SDK schema.
+
 ## 📐 Architecture
 
 ```
@@ -87,12 +121,6 @@ class _RemediationLearner:
     # 1. Pattern-level: (canonical_service, trigger_type) → action → success_rate
     # 2. Service-level: canonical_service → action → success_rate
     # 3. Global: action → success_rate
-    
-    def learn(self, canonical, trigger, remediation_event):
-        # Updates success counters based on outcome
-        
-    def suggest(self, canonical, trigger, target_svc):
-        # Returns ranked suggestions by learned success rate
 ```
 
 If rollback resolved 95% of incidents → confidence = 0.95. If a different action worked better, it surfaces that instead.
@@ -106,15 +134,9 @@ Doesn't require a fixed template. Adapts to available evidence:
 - **Metric-only**: Spike → Alert (no deploy found)
 - **Temporal confidence**: Events closer in time get higher confidence scores
 
-```python
-def _temporal_confidence(event_ts, ref_ts):
-    gap_minutes = abs(ref_ts - event_ts)
-    return max(0.5, min(0.95, 1.0 - gap/120))
-```
-
 ### 4. Behavioral Fingerprinting (Deep Mode)
 
-Topology-independent pattern matching:
+Topology-independent pattern matching using structural signatures:
 
 ```python
 @dataclass
@@ -129,8 +151,6 @@ class _Fingerprint:
     deploy_gap_min: float     # Time since deploy
 ```
 
-Similarity scoring weights: same service (0.40), same trigger (0.20), pattern match (0.30), magnitude similarity (0.10).
-
 ### 5. Family-Diversified Matching
 
 Returns one incident per family in top-5 for guaranteed recall:
@@ -143,7 +163,6 @@ Returns one incident per family in top-5 for guaranteed recall:
 | Metric | Value | Budget |
 |--------|-------|--------|
 | Ingest throughput | ~600K events/sec | ≥ 1,000 events/sec |
-| Ingest lag | < 1ms | ≤ 5s |
 | Fast mode p95 | < 1ms | ≤ 2,000ms |
 | Deep mode p95 | < 1ms | ≤ 6,000ms |
 | Cold-start to first reconstruction | < 100ms | ≤ 60s |
@@ -159,6 +178,7 @@ Returns one incident per family in top-5 for guaranteed recall:
 | **Adaptability** | Union-Find handles arbitrary rename chains, any seed |
 | **Scale** | O(n) ingest, O(log n) queries, tested at 56K events |
 | **Memory Evolution** | Continuous remediation learning, growing identity graph |
+| **Chaos Resilience** | Union-Find absorbs mid-eval topology shifts instantly |
 
 ## 🛡️ Robustness
 
@@ -168,18 +188,26 @@ Returns one incident per family in top-5 for guaranteed recall:
 - **Learned remediations**: Adapts to whatever actions resolve incidents
 - **Pure Python stdlib**: Zero external dependencies
 
-## 📁 File Structure
+## 📁 Submission Structure
 
 ```
-adapters/
-  engine.py              # Main submission (the Engine adapter class)
-  dummy.py               # Baseline (provided by benchmark)
-  __init__.py
-
-validate_worked_example.py  # Validates all P-02 requirements
-
-# Benchmark harness (provided)
-adapter.py / schema.py / generator.py / metrics.py / harness.py / run.py / self_check.py
+├── adapters/
+│   ├── engine.py              # ★ Main submission (the Engine adapter)
+│   ├── dummy.py               # Baseline (provided by benchmark)
+│   └── __init__.py
+├── bench/
+│   ├── run.sh                 # Linux/Mac benchmark runner
+│   └── run.bat                # Windows benchmark runner
+├── Dockerfile                 # Reproducible evaluation container
+├── WRITEUP.md                 # 3-page architecture defense
+├── README.md                  # This file (quickstart)
+├── validate_worked_example.py # Validates all P-02 requirements
+├── BENCHMARK_README.md        # Original benchmark docs
+│
+│ # Benchmark harness (provided, unmodified)
+├── adapter.py / schema.py / generator.py
+├── metrics.py / harness.py / run.py / self_check.py
+└── .gitignore
 ```
 
 ## 📜 License
