@@ -1,0 +1,3 @@
+# Anvil P-02 Context Engine
+# Pure Python stdlib - no external dependencies required
+# This file exists for compatibility with pip install -r requirements.txt
