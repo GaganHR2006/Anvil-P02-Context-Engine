@@ -1,5 +1,5 @@
 {
-  "mode": "fast",
+  "mode": "deep",
   "seeds": [
     314159,
     271828,
@@ -29,7 +29,7 @@
       "n_train": 53362,
       "n_eval": 22780,
       "n_signals": 25,
-      "mode": "fast",
+      "mode": "deep",
       "per_incident": [
         {
           "incident_id": "DEC-69329",
@@ -113,7 +113,7 @@
           "correct_family_in_top_k": true,
           "precision_at_k": 1.0,
           "remediation_matches": true,
-          "latency_ms": 14.999999999417923
+          "latency_ms": 0.0
         },
         {
           "incident_id": "INC-1293-5",
@@ -212,7 +212,7 @@
         "precision@5_mean": 0.344,
         "remediation_acc": 1.0,
         "latency_p95_ms": 0.0,
-        "latency_mean_ms": 0.6,
+        "latency_mean_ms": 0.0,
         "n": 25
       }
     },
@@ -233,11 +233,11 @@
         "cascading_renames": true,
         "decoy_rate": 0.2
       },
-      "ingest_ms": 94.0,
+      "ingest_ms": 63.0,
       "n_train": 53338,
       "n_eval": 22801,
       "n_signals": 25,
-      "mode": "fast",
+      "mode": "deep",
       "per_incident": [
         {
           "incident_id": "INC-73851-3",
@@ -441,11 +441,11 @@
         "cascading_renames": true,
         "decoy_rate": 0.2
       },
-      "ingest_ms": 94.0,
+      "ingest_ms": 110.0,
       "n_train": 53245,
       "n_eval": 22912,
       "n_signals": 25,
-      "mode": "fast",
+      "mode": "deep",
       "per_incident": [
         {
           "incident_id": "INC-16558-7",
@@ -649,11 +649,11 @@
         "cascading_renames": true,
         "decoy_rate": 0.2
       },
-      "ingest_ms": 78.0,
+      "ingest_ms": 94.0,
       "n_train": 53398,
       "n_eval": 22744,
       "n_signals": 25,
-      "mode": "fast",
+      "mode": "deep",
       "per_incident": [
         {
           "incident_id": "INC-14739-0",
@@ -695,7 +695,7 @@
           "correct_family_in_top_k": true,
           "precision_at_k": 0.2,
           "remediation_matches": true,
-          "latency_ms": 14.999999999417923
+          "latency_ms": 0.0
         },
         {
           "incident_id": "INC-4463-3",
@@ -836,7 +836,7 @@
         "precision@5_mean": 0.352,
         "remediation_acc": 1.0,
         "latency_p95_ms": 0.0,
-        "latency_mean_ms": 0.6,
+        "latency_mean_ms": 0.0,
         "n": 25
       }
     },
@@ -857,11 +857,11 @@
         "cascading_renames": true,
         "decoy_rate": 0.2
       },
-      "ingest_ms": 94.0,
+      "ingest_ms": 79.0,
       "n_train": 53547,
       "n_eval": 22595,
       "n_signals": 25,
-      "mode": "fast",
+      "mode": "deep",
       "per_incident": [
         {
           "incident_id": "INC-70948-1",
@@ -1054,7 +1054,7 @@
     "precision@5_mean": 0.3216,
     "remediation_acc": 1.0,
     "latency_p95_ms": 0.0,
-    "latency_mean_ms": 0.24,
+    "latency_mean_ms": 0.0,
     "n_seeds": 5,
     "n_signals_total": 125,
     "n": 125
@@ -1073,8 +1073,8 @@
     "note": "manual_* axes are panel-graded and excluded from the automated score"
   },
   "l3_version": "anvil-2026-p02-L3-final",
-  "timestamp": "2026-05-16T09:48:49+0530",
+  "timestamp": "2026-05-16T08:50:36+0530",
   "adapter": "adapters.engine:Engine",
-  "adapter_path": "C:\\Users\\gagan\\Desktop\\Anvil_P02\\adapters\\engine.py",
+  "adapter_path": "c:\\Users\\gagan\\Desktop\\Anvil_P02\\adapters\\engine.py",
   "adapter_sha256": "87e93da5c7cee9d615846c63e1731db423f2c1d73442a97367f7046ea2517dd4"
 }
